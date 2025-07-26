@@ -20,9 +20,11 @@
     "zod": "^4.0.10"
   },
   "devDependencies": {
+    "@prisma/client": "^6.12.0",
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
     "nodemon": "^3.1.10",
+    "prisma": "^6.12.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
