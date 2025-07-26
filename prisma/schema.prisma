@@ -13,3 +13,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String @id @default(uuid())
+  full_name String
+  phone     String
+  email     String @unique
+  password  String
+}
+
+model Seller {
+  id        String    @id @default(uuid())
+  full_name String
+  phone     String
+  email     String    @unique
+  cpf       String    @unique
+  password  String
+  products  Product[]
+}
+
+model Product {
+  id         String        @id @default(uuid())
+  title      String
+  price      Decimal       @db.Decimal(10, 2)
+  seller     Seller?       @relation(fields: [sellerId], references: [id])
+  sellerId   String?
+  category   Category      @relation(fields: [categoryId], references: [id])
+  categoryId String
+  type       ProductStatus
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  products Product[] // Uma categoria pode ter vários produtos
+}
+
+enum ProductStatus {
+  ANUNCIADO
+  VENDIDO
+  DESATIVADO
+}
