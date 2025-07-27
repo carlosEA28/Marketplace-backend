@@ -1,5 +1,6 @@
 import { z } from "zod";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import { cpf } from "cpf-cnpj-validator";
 
 export const CreateSellerProps = z.object({
   full_name: z.string().min(1, { message: "O nome completo é obrigatório" }),
@@ -24,17 +25,12 @@ export const CreateSellerProps = z.object({
     .string()
     .trim()
     .min(6, { message: "A senha tem que conter no mínimo 6 caractéres" }),
-  cpf: z
-    .string({
-      message: "CPF/CNPJ é obrigatório.",
-    })
-    .refine((doc) => {
-      const replacedDoc = doc.replace(/\D/g, "");
-      return replacedDoc.length >= 11;
-    }, "CPF deve conter no mínimo 11 caracteres.")
-    .refine((doc) => {
-      const replacedDoc = doc.replace(/\D/g, "");
-      return !!Number(replacedDoc);
-    }, "CPF deve conter apenas números."),
+  cpf: z.string().refine(
+    (value) => {
+      const clean = value.replace(/\D/g, "");
+      return cpf.isValid(clean);
+    },
+    { message: "CPF inválido" }
+  ),
   avatarImg: z.string().optional(),
 });
