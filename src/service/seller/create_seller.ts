@@ -5,6 +5,8 @@ import { PostgresCreateSellerRepository } from "../../repositories/postgres/sell
 import { PasswordEncoderAdapter } from "../../adapters/passwordEncoder";
 import { TokenGeneratorAdapter } from "../../adapters/tokenGenerator";
 import { v4 as uuidV4 } from "uuid";
+import { generateEmailAlreadyInUse } from "../../controllers/helpers/sellerHelper";
+import { EmailAlreadyInUseError } from "../../errors/seller";
 
 type CreateSellerData = z.infer<typeof CreateSellerProps>;
 
@@ -28,7 +30,7 @@ export class CreateSellerService {
 
     if (sellerAlreadyExists) {
       //criar erro customizado
-      throw new Error("Vendedor ja cadastrado");
+      throw new EmailAlreadyInUseError(createSellerParams.email);
     }
 
     const sellerId = uuidV4();

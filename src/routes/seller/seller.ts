@@ -7,7 +7,9 @@ export const sellerRouter = Router();
 sellerRouter.post("/", async (req: Request, res: Response) => {
   const createSellerController = makeCreateSellerController();
 
-  const body = await createSellerController.execute(req);
+  const { statusCode, body } = await createSellerController.execute(req);
 
-  res.status(201).send(body);
+  console.log(statusCode);
+
+  res.status(statusCode).send(body);
 });
