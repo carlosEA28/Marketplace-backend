@@ -1,7 +1,11 @@
+import z from "zod";
 import { PasswordComparatorAdapter } from "../../adapters/passwordComparator";
 import { TokenGeneratorAdapter } from "../../adapters/tokenGenerator";
 import { InvalidPasswordError, UserNotFoundError } from "../../errors/seller";
 import { PostgresGetSellerByEmailRepository } from "../../repositories/postgres/seller/getSellerByEmail";
+import { loginSchema } from "../../schemas/global/loginSchema";
+
+type LoginSellerData = z.infer<typeof loginSchema>;
 
 export class LoginSellerService {
   constructor(
@@ -10,7 +14,7 @@ export class LoginSellerService {
     private tokenGeneratorAdapter: TokenGeneratorAdapter
   ) {}
 
-  async execute(email: string, password: string) {
+  async execute({ email, password }: LoginSellerData) {
     const seller = await this.getSellerByEmail.execute(email);
 
     if (!seller) {
