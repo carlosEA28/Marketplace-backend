@@ -7,6 +7,9 @@ import { PostgresCreateSellerRepository } from "../../repositories/postgres/sell
 import { PostgresGetSellerByEmailRepository } from "../../repositories/postgres/seller/getSellerByEmail";
 import { S3Service } from "../../service/s3";
 import { CreateSellerService } from "../../service/seller/create_seller";
+import { PasswordComparatorAdapter } from "../../adapters/passwordComparator";
+import { LoginSellerService } from "../../service/seller/login";
+import { LoginSellerController } from "../../controllers/seller/login";
 
 export const makeCreateSellerController = () => {
   const getSellerByEmail = new PostgresGetSellerByEmailRepository();
@@ -32,4 +35,20 @@ export const makeCreateSellerController = () => {
   );
 
   return createSellerController;
+};
+
+export const makeLoginSellerContrller = () => {
+  const getUserByEmail = new PostgresGetSellerByEmailRepository();
+  const passwordComparatorAdapter = new PasswordComparatorAdapter();
+  const tokenGeneratorAdapter = new TokenGeneratorAdapter();
+
+  const loginSellerService = new LoginSellerService(
+    getUserByEmail,
+    passwordComparatorAdapter,
+    tokenGeneratorAdapter
+  );
+
+  const loginSellerController = new LoginSellerController(loginSellerService);
+
+  return loginSellerController;
 };
