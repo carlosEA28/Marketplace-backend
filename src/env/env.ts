@@ -7,6 +7,10 @@ const envSchema = z.object({
   POSTGRES_DB: z.string(),
   JWT_ACCESS_TOKEN_SECRET: z.string(),
   JWT_REFRESH_TOKEN_SECRET: z.string(),
+  AWS_ACCESS_KEY_ID: z.string(),
+  AWS_SECRET_ACCESS_KEY: z.string(),
+  AWS_REGION: z.string(),
+  BUCKET_NAME: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

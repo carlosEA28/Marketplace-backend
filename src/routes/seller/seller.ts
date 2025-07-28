@@ -1,15 +1,18 @@
 import { Router } from "express";
 import { Request, Response } from "express";
 import { makeCreateSellerController } from "../../factories/controllers/seller";
+import { upload } from "../../middlewares/multer";
 
 export const sellerRouter = Router();
 
-sellerRouter.post("/", async (req: Request, res: Response) => {
-  const createSellerController = makeCreateSellerController();
+sellerRouter.post(
+  "/",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    const createSellerController = makeCreateSellerController();
 
-  const { statusCode, body } = await createSellerController.execute(req);
+    const { statusCode, body } = await createSellerController.execute(req);
 
-  console.log(statusCode);
-
-  res.status(statusCode).send(body);
-});
+    res.status(statusCode).send(body);
+  }
+);

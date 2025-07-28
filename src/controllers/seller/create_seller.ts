@@ -2,7 +2,6 @@ import { CreateSellerProps } from "../../schemas/seller";
 import { CreateSellerService } from "../../service/seller/create_seller";
 import { Request } from "express";
 import { badRequest, created, serverError } from "../helpers/httpHelper";
-// import { ZodError } from "zod";
 import { ZodError } from "zod";
 import { EmailAlreadyInUseError } from "../../errors/seller";
 
@@ -13,11 +12,15 @@ export class CreateSellerController {
 
   async execute(httpRequest: Request) {
     try {
-      const params = httpRequest.body;
+      const { body, file } = httpRequest;
 
-      await CreateSellerProps.parseAsync(params);
+      await CreateSellerProps.parseAsync(body);
 
-      const createdSeller = await this.createSellerService.execute(params);
+      const createdSeller = await this.createSellerService.execute({
+        ...body,
+        imageBuffer: file?.buffer,
+        imageMimeType: file?.mimetype,
+      });
 
       return created(createdSeller);
     } catch (error) {
