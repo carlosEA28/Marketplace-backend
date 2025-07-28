@@ -9,3 +9,5 @@ export const loginSchema = z.object({
     error: "Password is required",
   }),
 });
+
+export type LoginSchemaData = z.infer<typeof loginSchema>;

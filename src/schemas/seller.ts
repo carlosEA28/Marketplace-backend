@@ -34,3 +34,5 @@ export const CreateSellerProps = z.object({
   ),
   avatarImg: z.string().optional(),
 });
+
+export type CreateSellerData = z.infer<typeof CreateSellerProps>;

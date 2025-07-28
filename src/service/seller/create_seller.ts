@@ -1,5 +1,3 @@
-import z from "zod";
-import { CreateSellerProps } from "../../schemas/seller";
 import { PostgresGetSellerByEmailRepository } from "../../repositories/postgres/seller/getSellerByEmail";
 import { PostgresCreateSellerRepository } from "../../repositories/postgres/seller/create_seller";
 import { PasswordEncoderAdapter } from "../../adapters/passwordEncoder";
@@ -7,9 +5,7 @@ import { TokenGeneratorAdapter } from "../../adapters/tokenGenerator";
 import { v4 as uuidV4 } from "uuid";
 import { EmailAlreadyInUseError } from "../../errors/seller";
 import { S3Service } from "../s3";
-
-type CreateSellerData = z.infer<typeof CreateSellerProps>;
-
+import type { CreateSellerData } from "../../schemas/seller";
 export class CreateSellerService {
   constructor(
     private getSellerByEmailRepository: PostgresGetSellerByEmailRepository,

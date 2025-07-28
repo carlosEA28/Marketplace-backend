@@ -12,4 +12,5 @@ export const CreateProductSchema = z.object({
   }),
   productImage: z.url({ message: "URL da imagem inválida" }),
 });
+
 export type CreateProductData = z.infer<typeof CreateProductSchema>;
