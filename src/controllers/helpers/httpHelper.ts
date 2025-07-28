@@ -1,4 +1,3 @@
-// badRequest - Para erros de validação do cliente (ex: dados incompletos)
 export const badRequest = (
   body: Error | object
 ): { statusCode: 400; body: Error | object } => {
@@ -8,7 +7,6 @@ export const badRequest = (
   };
 };
 
-// created - Para a criação bem-sucedida de um novo recurso
 export const created = (
   body: object | null
 ): { statusCode: 201; body: object | null } => {
@@ -18,7 +16,6 @@ export const created = (
   };
 };
 
-// serverError - Para erros internos do servidor (não visíveis ao cliente)
 export const serverError = (
   body: Error | string
 ): { statusCode: 500; body: Error | string } => {
@@ -28,7 +25,6 @@ export const serverError = (
   };
 };
 
-// ok - Para respostas bem-sucedidas com conteúdo (ex: buscar dados)
 export const ok = (
   body: object | string
 ): { statusCode: 200; body: object | string } => {
@@ -38,10 +34,27 @@ export const ok = (
   };
 };
 
-// noContent - Para respostas bem-sucedidas sem conteúdo (ex: exclusão)
 export const noContent = (): { statusCode: 204; body: null } => {
   return {
     statusCode: 204,
     body: null,
+  };
+};
+
+export const unauthorized = (
+  body: object | string
+): { statusCode: 401; body: object | string } => {
+  return {
+    statusCode: 401,
+    body,
+  };
+};
+
+export const notFound = (
+  body: object | string = { message: "Not Found" }
+): { statusCode: 404; body: object | string } => {
+  return {
+    statusCode: 404,
+    body,
   };
 };
