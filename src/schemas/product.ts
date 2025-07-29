@@ -2,7 +2,9 @@ import z from "zod";
 
 export const CreateProductSchema = z.object({
   title: z.string().min(1, { message: "O título é obrigatório" }),
-  price: z.string({ error: "O preço é obrigatório" }),
+  price: z
+    .number({ error: "O preço é obrigatório" })
+    .positive({ message: "O preço deve ser positivo" }),
   sellerId: z.string({ message: "ID do vendedor inválido" }),
   categoryId: z.string({ message: "ID da categoria inválido" }),
   type: z
