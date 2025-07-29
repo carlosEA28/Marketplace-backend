@@ -1,7 +1,6 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { PasswordEncoderAdapter } from "../../adapters/passwordEncoder";
 import { TokenGeneratorAdapter } from "../../adapters/tokenGenerator";
-import { S3Config } from "../../config/aws/s3";
 import { CreateSellerController } from "../../controllers/seller/create_seller";
 import { PostgresCreateSellerRepository } from "../../repositories/postgres/seller/create_seller";
 import { PostgresGetSellerByEmailRepository } from "../../repositories/postgres/seller/getSellerByEmail";
