@@ -38,6 +38,7 @@ model Product {
   id           String        @id @default(uuid())
   title        String
   price        Decimal       @db.Decimal(10, 2)
+  description  String
   seller       Seller?       @relation(fields: [sellerId], references: [id])
   sellerId     String?
   category     Category      @relation(fields: [categoryId], references: [id])
@@ -49,7 +50,7 @@ model Product {
 model Category {
   id       String    @id @default(uuid())
   name     String
-  products Product[] // Uma categoria pode ter vários produtos
+  products Product[]
 }
 
 enum ProductStatus {

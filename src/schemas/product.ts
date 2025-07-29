@@ -5,7 +5,10 @@ export const CreateProductSchema = z.object({
   price: z.coerce.number({ message: "O preço é obrigatório" }).positive({
     message: "O preço deve ser positivo",
   }),
-
+  description: z
+    .string()
+    .trim()
+    .min(1, { message: "A descrição é obrigatória" }),
   sellerId: z.string({ message: "ID do vendedor inválido" }),
   categoryId: z.string({ message: "ID da categoria inválido" }),
   type: z

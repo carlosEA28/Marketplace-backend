@@ -7,6 +7,7 @@ export class PostegresCreateProductRepository {
       data: {
         title: createProductParams.title,
         price: createProductParams.price,
+        description: createProductParams.description,
         sellerId: createProductParams.sellerId,
         categoryId: createProductParams.categoryId,
         type: createProductParams.type,
