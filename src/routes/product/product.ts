@@ -3,6 +3,7 @@ import { upload } from "../../middlewares/multer";
 import {
   makeCreateProductController,
   makeGetAllAnoucedProductsQuantityController,
+  makeGetAllSoldProductsQuantityController,
 } from "../../factories/controllers/product";
 
 export const productRouter = Router();
@@ -26,6 +27,15 @@ productRouter.get("/:sellerId", async (req: Request, res: Response) => {
   const { statusCode, body } = await getAllAnoucedProductsController.execute(
     req
   );
+
+  res.status(statusCode).send(body);
+});
+
+productRouter.get("/", async (req: Request, res: Response) => {
+  const getAllSoldProductsController =
+    makeGetAllSoldProductsQuantityController();
+
+  const { statusCode, body } = await getAllSoldProductsController.execute(req);
 
   res.status(statusCode).send(body);
 });

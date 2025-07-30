@@ -3,23 +3,28 @@ import { GetAllAnoucedProductsQuantityService } from "../../service/product/getA
 import { badRequest, notFound, ok, serverError } from "../helpers/httpHelper";
 import { ZodError } from "zod";
 import { UserNotFoundError } from "../../errors/seller";
+import { GetAllSoldProductsQuantityService } from "../../service/product/getAllSoldProductsQuantity";
+import { fetchPoductProps } from "../../schemas/global/fetchProducts";
 
-export class GetAllAnoucedProductsQuantityController {
+export class GetAllSoldProductsQuantityController {
   constructor(
-    private getAllAnouncedProductsService: GetAllAnoucedProductsQuantityService
+    private getAllSoldProductsQuantity: GetAllSoldProductsQuantityService
   ) {
-    this.getAllAnouncedProductsService = getAllAnouncedProductsService;
+    this.getAllSoldProductsQuantity = getAllSoldProductsQuantity;
   }
 
   async execute(httpRequest: Request) {
     try {
-      const { sellerId } = httpRequest.params;
+      const fetchProductsParams = await fetchPoductProps.parseAsync({
+        sellerId: httpRequest.query.sellerId,
+        type: httpRequest.query.type,
+      });
 
-      const products = await this.getAllAnouncedProductsService.execute(
-        sellerId
+      const soldProducts = await this.getAllSoldProductsQuantity.execute(
+        fetchProductsParams
       );
 
-      return ok(products);
+      return ok(soldProducts);
     } catch (error) {
       if (error instanceof ZodError) {
         return badRequest({

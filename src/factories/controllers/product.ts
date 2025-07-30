@@ -7,6 +7,9 @@ import { CreateProductController } from "../../controllers/product/create_produc
 import { PostgreGetAllAnoucedProductsQuantityRepository } from "../../repositories/postgres/product/getAllAnoucedProducts";
 import { GetAllAnoucedProductsQuantityController } from "../../controllers/product/getAllAnouncedProducts";
 import { GetAllAnoucedProductsQuantityService } from "../../service/product/getAllAnoucedProducts";
+import { PostgresGetAllSoldProductsQuantityRepository } from "../../repositories/postgres/product/getAllSoldProductsQuantity";
+import { GetAllSoldProductsQuantityService } from "../../service/product/getAllSoldProductsQuantity";
+import { GetAllSoldProductsQuantityController } from "../../controllers/product/getAllSoldProductsQuantity";
 // import PostgreGetAllAnoucedProductsRepository
 
 export const makeCreateProductController = () => {
@@ -42,4 +45,21 @@ export const makeGetAllAnoucedProductsQuantityController = () => {
     new GetAllAnoucedProductsQuantityController(getAllAnouncedProductsService);
 
   return getAllAnouncedProductsController;
+};
+
+export const makeGetAllSoldProductsQuantityController = () => {
+  const getSellerByIdRepository = new PostgresGetSellerById();
+  const getAllSoldProductsRepository =
+    new PostgresGetAllSoldProductsQuantityRepository();
+
+  const getAllSoldProductsService = new GetAllSoldProductsQuantityService(
+    getSellerByIdRepository,
+    getAllSoldProductsRepository
+  );
+
+  const getAllSoldProductsController = new GetAllSoldProductsQuantityController(
+    getAllSoldProductsService
+  );
+
+  return getAllSoldProductsController;
 };
