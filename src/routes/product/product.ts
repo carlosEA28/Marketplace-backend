@@ -1,12 +1,15 @@
 import { Router, Request, Response } from "express";
 import { upload } from "../../middlewares/multer";
-import { makeCreateProductController } from "../../factories/controllers/product";
+import {
+  makeCreateProductController,
+  makeGetAllAnoucedProductsQuantityController,
+} from "../../factories/controllers/product";
 
 export const productRouter = Router();
 
 productRouter.post(
   "/",
-  upload.single("image"), // ✅ correto
+  upload.single("image"),
   async (req: Request, res: Response) => {
     const createProductController = makeCreateProductController();
 
@@ -15,3 +18,14 @@ productRouter.post(
     res.status(statusCode).send(body);
   }
 );
+
+productRouter.get("/:sellerId", async (req: Request, res: Response) => {
+  const getAllAnoucedProductsController =
+    makeGetAllAnoucedProductsQuantityController();
+
+  const { statusCode, body } = await getAllAnoucedProductsController.execute(
+    req
+  );
+
+  res.status(statusCode).send(body);
+});

@@ -26,8 +26,8 @@ export const serverError = (
 };
 
 export const ok = (
-  body: object | string
-): { statusCode: 200; body: object | string } => {
+  body: object | string | number
+): { statusCode: 200; body: object | string | number } => {
   return {
     statusCode: 200,
     body,
