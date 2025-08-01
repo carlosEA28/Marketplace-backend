@@ -13,6 +13,9 @@ import { GetAllSoldProductsQuantityController } from "../../controllers/product/
 import { PostgresGetAllSellerProductsRepository } from "../../repositories/postgres/product/getAllSellerProducts";
 import { GetAllSellerProductsController } from "../../controllers/product/getAllSellerProducts";
 import { GetAllSellerProductsService } from "../../service/product/getAllProducts";
+import { PostgresGetAllProductsByTypeRepository } from "../../repositories/postgres/product/getSellerProductsByType";
+import { GetAllSellerProductsByTypeController } from "../../controllers/product/getAllSellerProductsByType";
+import { GetAllSellerProductsByTypeService } from "../../service/product/getAllSellerProductsByType";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -81,4 +84,20 @@ export const makeGetAllSellerProductsController = () => {
   );
 
   return getAllSellerProductsController;
+};
+export const makeGetAllSellerProductsByType = () => {
+  const getSellerByIdRepository = new PostgresGetSellerById();
+  const getAllSellerProductsByType =
+    new PostgresGetAllProductsByTypeRepository();
+
+  const getAllSellerProductsByTypeService =
+    new GetAllSellerProductsByTypeService(
+      getSellerByIdRepository,
+      getAllSellerProductsByType
+    );
+
+  const getAllSellerProductsByTypeController =
+    new GetAllSellerProductsByTypeController(getAllSellerProductsByTypeService);
+
+  return getAllSellerProductsByTypeController;
 };
