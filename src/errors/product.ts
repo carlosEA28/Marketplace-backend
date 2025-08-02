@@ -4,3 +4,9 @@ export class ProductAlreadyExistsError extends Error {
     this.name = "InvalidPasswordError";
   }
 }
+export class ProductNotFoundError extends Error {
+  constructor() {
+    super("Produto não encontrado");
+    this.name = "ProductNotFoundError";
+  }
+}

@@ -20,3 +20,14 @@ export const CreateProductSchema = z.object({
 });
 
 export type CreateProductData = z.infer<typeof CreateProductSchema>;
+
+export const UpdateProductSchema = z.object({
+  title: z.string().min(1).optional(),
+  price: z.coerce.number().positive().optional(),
+  description: z.string().trim().min(1).optional(),
+  categoryId: z.string().uuid().optional(),
+  type: z.enum(["ANUNCIADO", "VENDIDO", "DESATIVADO"]).optional(),
+  productImage: z.string().url().optional(),
+});
+
+export type UpdateProductData = z.infer<typeof UpdateProductSchema>;

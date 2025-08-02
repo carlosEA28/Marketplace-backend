@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
 import { upload } from "../../middlewares/multer";
-import { makeGetAllSellerProductsByType } from "../../factories/controllers/product";
+import {
+  makeGetAllSellerProductsByType,
+  makeUpdateProductController,
+} from "../../factories/controllers/product";
 import {
   makeCreateProductController,
   makeGetAllAnoucedProductsQuantityController,
@@ -60,3 +63,15 @@ productRouter.get("/", async (req: Request, res: Response) => {
 
   res.status(statusCode).send(body);
 });
+
+productRouter.put(
+  "/:sellerId",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    const updateProductController = makeUpdateProductController();
+
+    const { statusCode, body } = await updateProductController.execute(req);
+
+    res.status(statusCode).send(body);
+  }
+);

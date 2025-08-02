@@ -16,6 +16,10 @@ import { GetAllSellerProductsService } from "../../service/product/getAllProduct
 import { PostgresGetAllProductsByTypeRepository } from "../../repositories/postgres/product/getSellerProductsByType";
 import { GetAllSellerProductsByTypeController } from "../../controllers/product/getAllSellerProductsByType";
 import { GetAllSellerProductsByTypeService } from "../../service/product/getAllSellerProductsByType";
+import { PostgresGetProductById } from "../../repositories/postgres/product/getProductById";
+import { PostgresUpdateProductRepository } from "../../repositories/postgres/product/updateProduct";
+import { UpdateProductService } from "../../service/product/updateProduct";
+import { UpdateProductController } from "../../controllers/product/updateProduct";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -85,6 +89,7 @@ export const makeGetAllSellerProductsController = () => {
 
   return getAllSellerProductsController;
 };
+
 export const makeGetAllSellerProductsByType = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
   const getAllSellerProductsByType =
@@ -100,4 +105,20 @@ export const makeGetAllSellerProductsByType = () => {
     new GetAllSellerProductsByTypeController(getAllSellerProductsByTypeService);
 
   return getAllSellerProductsByTypeController;
+};
+
+export const makeUpdateProductController = () => {
+  const getProductById = new PostgresGetProductById();
+  const updateProductRepository = new PostgresUpdateProductRepository();
+
+  const updateProductService = new UpdateProductService(
+    getProductById,
+    updateProductRepository
+  );
+
+  const updateProductController = new UpdateProductController(
+    updateProductService
+  );
+
+  return updateProductController;
 };
