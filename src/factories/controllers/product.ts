@@ -12,7 +12,7 @@ import { GetAllSoldProductsQuantityService } from "../../service/product/getAllS
 import { GetAllSoldProductsQuantityController } from "../../controllers/product/getAllSoldProductsQuantity";
 import { PostgresGetAllSellerProductsRepository } from "../../repositories/postgres/product/getAllSellerProducts";
 import { GetAllSellerProductsController } from "../../controllers/product/getAllSellerProducts";
-import { GetAllSellerProductsService } from "../../service/product/getAllProducts";
+import { GetAllSellerProductsService } from "../../service/product/getAllSellerProducts";
 import { PostgresGetAllProductsByTypeRepository } from "../../repositories/postgres/product/getSellerProductsByType";
 import { GetAllSellerProductsByTypeController } from "../../controllers/product/getAllSellerProductsByType";
 import { GetAllSellerProductsByTypeService } from "../../service/product/getAllSellerProductsByType";

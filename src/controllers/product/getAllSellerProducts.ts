@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { GetAllSellerProductsService } from "../../service/product/getAllProducts";
+import { GetAllSellerProductsService } from "../../service/product/getAllSellerProducts";
 import { ZodError } from "zod";
 import { badRequest, notFound, ok, serverError } from "../helpers/httpHelper";
 import { UserNotFoundError } from "../../errors/seller";
