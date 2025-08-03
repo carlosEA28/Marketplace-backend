@@ -4,6 +4,7 @@ import {
   makeGetAllProductsController,
   makeGetAllSellerProductsByType,
   makeGetProductsByCategoryController,
+  makeGetProductsByPriceRangeController,
   makeUpdateProductController,
 } from "../../factories/controllers/product";
 import {
@@ -36,6 +37,17 @@ productRouter.get("/by-category", async (req: Request, res: Response) => {
   const getProductsByCategoryController = makeGetProductsByCategoryController();
 
   const { statusCode, body } = await getProductsByCategoryController.execute(
+    req
+  );
+
+  res.status(statusCode).send(body);
+});
+
+productRouter.get("/by-price-range", async (req: Request, res: Response) => {
+  const getProductsByPriceRangeController =
+    makeGetProductsByPriceRangeController();
+
+  const { statusCode, body } = await getProductsByPriceRangeController.execute(
     req
   );
 

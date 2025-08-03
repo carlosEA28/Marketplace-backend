@@ -27,6 +27,9 @@ import { GetProductsByCategoryService } from "../../service/product/getProductsB
 import { PostgresGetProductsByCategoryRepository } from "../../repositories/postgres/product/getProductsByCategory";
 import { PostgresGetCategoryById } from "../../repositories/postgres/category/getCategoryById";
 import { GetProductsByCategoryController } from "../../controllers/product/getProductsByCategoryId";
+import { PostgresGetProductsByPriceRangeRepository } from "../../repositories/postgres/product/getProductFromPriceRange";
+import { GetProductsByPriceRangeService } from "../../service/product/getProductsByPriceRange";
+import { GetProductsByPriceRangeController } from "../../controllers/product/getProdcutsByPriceRange";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -158,4 +161,17 @@ export const makeGetProductsByCategoryController = () => {
   );
 
   return getProductsByCategoryController;
+};
+
+export const makeGetProductsByPriceRangeController = () => {
+  const getProductsByPriceRangeRepository =
+    new PostgresGetProductsByPriceRangeRepository();
+  const getProductsByPriceRangeService = new GetProductsByPriceRangeService(
+    getProductsByPriceRangeRepository
+  );
+
+  const getProductsByPriceRangeController =
+    new GetProductsByPriceRangeController(getProductsByPriceRangeService);
+
+  return getProductsByPriceRangeController;
 };

@@ -39,3 +39,12 @@ export const GetProductByCategorySchema = z.object({
 export type GetProductByCategoryData = z.infer<
   typeof GetProductByCategorySchema
 >;
+
+export const GetProductByPriceRangeSchema = z.object({
+  from: z.coerce.number(),
+  to: z.coerce.number(),
+});
+
+export type GetProductByPriceRangeData = z.infer<
+  typeof GetProductByPriceRangeSchema
+>;
