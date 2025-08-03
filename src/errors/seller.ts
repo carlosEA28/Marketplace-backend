@@ -17,3 +17,10 @@ export class InvalidPasswordError extends Error {
     this.name = "InvalidPasswordError";
   }
 }
+
+export class UnauthorizedError extends Error {
+  constructor() {
+    super(`Você não está autorizado a realizar esta ação`);
+    this.name = "UnauthorizedError";
+  }
+}

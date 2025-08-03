@@ -9,6 +9,9 @@ import { CreateSellerService } from "../../service/seller/create_seller";
 import { PasswordComparatorAdapter } from "../../adapters/passwordComparator";
 import { LoginSellerService } from "../../service/seller/login";
 import { LoginSellerController } from "../../controllers/seller/login";
+import { TokenVerifierAdapter } from "../../adapters/tokenVerifire";
+import { RefreshTokenService } from "../../service/seller/refreshToken";
+import { RefreshTokenController } from "../../controllers/product/refreshToken";
 
 export const makeCreateSellerController = () => {
   const getSellerByEmail = new PostgresGetSellerByEmailRepository();
@@ -50,4 +53,20 @@ export const makeLoginSellerContrller = () => {
   const loginSellerController = new LoginSellerController(loginSellerService);
 
   return loginSellerController;
+};
+
+export const makeRefreshTokenController = () => {
+  const tokenGeneratorAdapter = new TokenGeneratorAdapter();
+  const tokenVerifierAdapter = new TokenVerifierAdapter();
+
+  const refreshTokenService = new RefreshTokenService(
+    tokenGeneratorAdapter,
+    tokenVerifierAdapter
+  );
+
+  const refreshTokenController = new RefreshTokenController(
+    refreshTokenService
+  );
+
+  return refreshTokenController;
 };
