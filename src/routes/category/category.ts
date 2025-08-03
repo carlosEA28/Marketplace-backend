@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
 import { makeCreateCategoryController } from "../../factories/controllers/category";
+import { auth } from "../../middlewares/auth";
 
 export const categoryRouter = Router();
 
-categoryRouter.post("/", async (req: Request, res: Response) => {
+categoryRouter.post("/", auth, async (req: Request, res: Response) => {
   const createCategoryController = makeCreateCategoryController();
 
   const { body, statusCode } = await createCategoryController.execute(req);

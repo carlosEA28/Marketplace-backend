@@ -13,6 +13,7 @@ import {
   makeGetAllSellerProductsController,
   makeGetAllSoldProductsQuantityController,
 } from "../../factories/controllers/product";
+import { auth } from "../../middlewares/auth";
 
 export const productRouter = Router();
 
@@ -24,7 +25,7 @@ productRouter.get("/", async (_req: Request, res: Response) => {
   res.status(statusCode).send(body);
 });
 
-productRouter.get("/me", async (req: Request, res: Response) => {
+productRouter.get("/me", auth, async (req: Request, res: Response) => {
   const getAllSellerProductsByTypeController = makeGetAllSellerProductsByType();
 
   const { body, statusCode } =
@@ -57,6 +58,7 @@ productRouter.get("/by-price-range", async (req: Request, res: Response) => {
 productRouter.post(
   "/",
   upload.single("image"),
+  auth,
   async (req: Request, res: Response) => {
     const createProductController = makeCreateProductController();
 
@@ -66,7 +68,7 @@ productRouter.post(
   }
 );
 
-productRouter.get("/:sellerId", async (req: Request, res: Response) => {
+productRouter.get("/:sellerId", auth, async (req: Request, res: Response) => {
   const getAllAnoucedProductsController =
     makeGetAllAnoucedProductsQuantityController();
 
@@ -77,17 +79,21 @@ productRouter.get("/:sellerId", async (req: Request, res: Response) => {
   res.status(statusCode).send(body);
 });
 
-productRouter.get("/me/:sellerId", async (req: Request, res: Response) => {
-  const getAllSellerProductsController = makeGetAllSellerProductsController();
+productRouter.get(
+  "/me/:sellerId",
+  auth,
+  async (req: Request, res: Response) => {
+    const getAllSellerProductsController = makeGetAllSellerProductsController();
 
-  const { body, statusCode } = await getAllSellerProductsController.execute(
-    req
-  );
+    const { body, statusCode } = await getAllSellerProductsController.execute(
+      req
+    );
 
-  res.status(statusCode).send(body);
-});
+    res.status(statusCode).send(body);
+  }
+);
 
-productRouter.get("/", async (req: Request, res: Response) => {
+productRouter.get("/", auth, async (req: Request, res: Response) => {
   const getAllSoldProductsController =
     makeGetAllSoldProductsQuantityController();
 
@@ -99,6 +105,7 @@ productRouter.get("/", async (req: Request, res: Response) => {
 productRouter.put(
   "/:sellerId",
   upload.single("image"),
+  auth,
   async (req: Request, res: Response) => {
     const updateProductController = makeUpdateProductController();
 

@@ -6,12 +6,14 @@ import {
   makeRefreshTokenController,
 } from "../../factories/controllers/seller";
 import { upload } from "../../middlewares/multer";
+import { auth } from "../../middlewares/auth";
 
 export const sellerRouter = Router();
 
 sellerRouter.post(
   "/",
   upload.single("image"),
+  auth,
   async (req: Request, res: Response) => {
     const createSellerController = makeCreateSellerController();
 
