@@ -20,6 +20,9 @@ import { PostgresGetProductById } from "../../repositories/postgres/product/getP
 import { PostgresUpdateProductRepository } from "../../repositories/postgres/product/updateProduct";
 import { UpdateProductService } from "../../service/product/updateProduct";
 import { UpdateProductController } from "../../controllers/product/updateProduct";
+import { PostgresGetAllProductsRepository } from "../../repositories/postgres/product/getAllproducts";
+import { GetAllProductsService } from "../../service/product/getAllProducts";
+import { GetAllProductsController } from "../../controllers/product/getAllProducts";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -121,4 +124,18 @@ export const makeUpdateProductController = () => {
   );
 
   return updateProductController;
+};
+
+export const makeGetAllProductsController = () => {
+  const getAllProductsRepository = new PostgresGetAllProductsRepository();
+
+  const getAllProductsService = new GetAllProductsService(
+    getAllProductsRepository
+  );
+
+  const getAllProductsController = new GetAllProductsController(
+    getAllProductsService
+  );
+
+  return getAllProductsController;
 };

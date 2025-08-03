@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { upload } from "../../middlewares/multer";
 import {
+  makeGetAllProductsController,
   makeGetAllSellerProductsByType,
   makeUpdateProductController,
 } from "../../factories/controllers/product";
@@ -12,6 +13,14 @@ import {
 } from "../../factories/controllers/product";
 
 export const productRouter = Router();
+
+productRouter.get("/", async (_req: Request, res: Response) => {
+  const getAllProductsController = makeGetAllProductsController();
+
+  const { body, statusCode } = await getAllProductsController.execute();
+
+  res.status(statusCode).send(body);
+});
 
 productRouter.get("/me", async (req: Request, res: Response) => {
   const getAllSellerProductsByTypeController = makeGetAllSellerProductsByType();
