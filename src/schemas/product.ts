@@ -31,3 +31,11 @@ export const UpdateProductSchema = z.object({
 });
 
 export type UpdateProductData = z.infer<typeof UpdateProductSchema>;
+
+export const GetProductByCategorySchema = z.object({
+  categoryId: z.array(z.string().uuid({ message: "ID da categoria inválido" })),
+});
+
+export type GetProductByCategoryData = z.infer<
+  typeof GetProductByCategorySchema
+>;

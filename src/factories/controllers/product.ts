@@ -23,6 +23,10 @@ import { UpdateProductController } from "../../controllers/product/updateProduct
 import { PostgresGetAllProductsRepository } from "../../repositories/postgres/product/getAllproducts";
 import { GetAllProductsService } from "../../service/product/getAllProducts";
 import { GetAllProductsController } from "../../controllers/product/getAllProducts";
+import { GetProductsByCategoryService } from "../../service/product/getProductsByCategory";
+import { PostgresGetProductsByCategoryRepository } from "../../repositories/postgres/product/getProductsByCategory";
+import { PostgresGetCategoryById } from "../../repositories/postgres/category/getCategoryById";
+import { GetProductsByCategoryController } from "../../controllers/product/getProductsByCategoryId";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -138,4 +142,20 @@ export const makeGetAllProductsController = () => {
   );
 
   return getAllProductsController;
+};
+
+export const makeGetProductsByCategoryController = () => {
+  const getProductsByCategory = new PostgresGetProductsByCategoryRepository();
+  const getCategoryById = new PostgresGetCategoryById();
+
+  const getProductsByCategoryService = new GetProductsByCategoryService(
+    getCategoryById,
+    getProductsByCategory
+  );
+
+  const getProductsByCategoryController = new GetProductsByCategoryController(
+    getProductsByCategoryService
+  );
+
+  return getProductsByCategoryController;
 };

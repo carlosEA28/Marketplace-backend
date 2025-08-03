@@ -4,3 +4,9 @@ export class CategoryAlreadyExistsError extends Error {
     this.name = "InvalidPasswordError";
   }
 }
+export class CategoryNotFoundError extends Error {
+  constructor() {
+    super("A categoria não foi encontrada");
+    this.name = "CategoryNotFoundError";
+  }
+}
