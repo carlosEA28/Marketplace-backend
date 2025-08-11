@@ -12,3 +12,11 @@ services:
       - "5433:5432"
     volumes:
       - ./.postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: bitnami/redis:latest
+    container_name: marketplace_redis
+    environment:
+      REDIS_PASSWORD: caduredis
+    ports:
+      - "6379:6379"
