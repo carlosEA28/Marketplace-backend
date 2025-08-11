@@ -3,6 +3,7 @@ import { GetAllSellerProductsService } from "../../service/product/getAllSellerP
 import { ZodError } from "zod";
 import { badRequest, notFound, ok, serverError } from "../helpers/httpHelper";
 import { UserNotFoundError } from "../../errors/seller";
+import redis from "../../config/redis/redis";
 
 export class GetAllSellerProductsController {
   constructor(private getAllSellerProducts: GetAllSellerProductsService) {
@@ -12,6 +13,10 @@ export class GetAllSellerProductsController {
   async execute(httpRequest: Request) {
     try {
       const { sellerId } = httpRequest.params;
+
+      const cacheKey = "seller:allproducts";
+
+      const cachedProducts = await redis.get(cacheKey);
 
       const products = await this.getAllSellerProducts.execute(sellerId);
 

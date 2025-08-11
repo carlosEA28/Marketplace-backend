@@ -19,6 +19,7 @@
     "cpf-cnpj-validator": "^1.0.3",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "ioredis": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.12.10",
     "multer": "^2.0.2",
