@@ -19,7 +19,12 @@ export class RedisGetAllSellerProductsRepository {
       );
 
       //mudar para um dia a ex
-      await this.redis.set("products", JSON.stringify(products), "EX", 86400);
+      await this.redis.set(
+        `products:seller:${sellerId}`,
+        JSON.stringify(products),
+        "EX",
+        86400
+      );
 
       return products;
     }
