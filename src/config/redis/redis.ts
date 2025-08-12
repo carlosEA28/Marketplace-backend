@@ -1,9 +1,17 @@
-import IORedis from "ioredis";
+import Redis from "ioredis";
 
-const redis = new IORedis({
-  host: process.env.REDIS_HOST,
-  port: 6379,
-  password: process.env.REDIS_PASSWORD,
-});
+export class RedisService extends Redis {
+  constructor() {
+    super({
+      host: "localhost",
+      port: 6379,
+      password: "caduredis",
+    });
 
-export default redis;
+    this.on("connect", () => {});
+
+    this.on("error", (err) => {
+      console.error("Erro no Redis:", err);
+    });
+  }
+}

@@ -30,6 +30,8 @@ import { GetProductsByCategoryController } from "../../controllers/product/getPr
 import { PostgresGetProductsByPriceRangeRepository } from "../../repositories/postgres/product/getProductFromPriceRange";
 import { GetProductsByPriceRangeService } from "../../service/product/getProductsByPriceRange";
 import { GetProductsByPriceRangeController } from "../../controllers/product/getProdcutsByPriceRange";
+import { RedisGetAllSellerProductsRepository } from "../../repositories/cache/products/redis-getAllSellerProductsRepository";
+import { RedisService } from "../../config/redis/redis";
 
 export const makeCreateProductController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
@@ -85,16 +87,20 @@ export const makeGetAllSoldProductsQuantityController = () => {
 
 export const makeGetAllSellerProductsController = () => {
   const getSellerByIdRepository = new PostgresGetSellerById();
+
   const getAllSellerProductsRepository =
     new PostgresGetAllSellerProductsRepository();
 
-  const getAllSoldProductsService = new GetAllSellerProductsService(
-    getSellerByIdRepository,
-    getAllSellerProductsRepository
-  );
+  const redisService = new RedisService();
+
+  const redisGetAllSellerProductsRepository =
+    new RedisGetAllSellerProductsRepository(
+      getAllSellerProductsRepository,
+      redisService
+    );
 
   const getAllSellerProductsController = new GetAllSellerProductsController(
-    getAllSoldProductsService
+    redisGetAllSellerProductsRepository
   );
 
   return getAllSellerProductsController;
