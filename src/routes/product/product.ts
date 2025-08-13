@@ -14,16 +14,21 @@ import {
   makeGetAllSoldProductsQuantityController,
 } from "../../factories/controllers/product";
 import { auth } from "../../middlewares/auth";
+import { cacheMiddleware } from "../../middlewares/redis";
 
 export const productRouter = Router();
 
-productRouter.get("/", async (_req: Request, res: Response) => {
-  const getAllProductsController = makeGetAllProductsController();
+productRouter.get(
+  "/",
+  cacheMiddleware("produtos", 15),
+  async (_req: Request, res: Response) => {
+    const getAllProductsController = makeGetAllProductsController();
 
-  const { body, statusCode } = await getAllProductsController.execute();
+    const { body, statusCode } = await getAllProductsController.execute();
 
-  res.status(statusCode).send(body);
-});
+    res.status(statusCode).send(body);
+  }
+);
 
 productRouter.get("/me", auth, async (req: Request, res: Response) => {
   const getAllSellerProductsByTypeController = makeGetAllSellerProductsByType();

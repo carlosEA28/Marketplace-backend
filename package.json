@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.12.10",
     "multer": "^2.0.2",
+    "object-hash": "^3.0.0",
     "uuid": "^11.1.0",
     "zod": "^4.0.10"
   },

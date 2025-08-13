@@ -11,7 +11,7 @@ export class RedisGetAllSellerProductsRepository {
   }
 
   async execute(sellerId: string) {
-    const cachedProducts = await this.redis.get("products");
+    const cachedProducts = await this.redis.get(`products:seller:${sellerId}`,);
 
     if (!cachedProducts) {
       const products = await this.getAllSellerProductsRepository.execute(
