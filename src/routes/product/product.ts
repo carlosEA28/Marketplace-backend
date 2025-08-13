@@ -39,26 +39,34 @@ productRouter.get("/me", auth, async (req: Request, res: Response) => {
   res.status(statusCode).send(body);
 });
 
-productRouter.get("/by-category", async (req: Request, res: Response) => {
-  const getProductsByCategoryController = makeGetProductsByCategoryController();
+productRouter.get(
+  "/by-category",
+  cacheMiddleware("categoryProducts", 15),
+  async (req: Request, res: Response) => {
+    const getProductsByCategoryController =
+      makeGetProductsByCategoryController();
 
-  const { statusCode, body } = await getProductsByCategoryController.execute(
-    req
-  );
+    const { statusCode, body } = await getProductsByCategoryController.execute(
+      req
+    );
 
-  res.status(statusCode).send(body);
-});
+    res.status(statusCode).send(body);
+  }
+);
 
-productRouter.get("/by-price-range", async (req: Request, res: Response) => {
-  const getProductsByPriceRangeController =
-    makeGetProductsByPriceRangeController();
+productRouter.get(
+  "/by-price-range",
+  cacheMiddleware("byPriceProducts", 15),
+  async (req: Request, res: Response) => {
+    const getProductsByPriceRangeController =
+      makeGetProductsByPriceRangeController();
 
-  const { statusCode, body } = await getProductsByPriceRangeController.execute(
-    req
-  );
+    const { statusCode, body } =
+      await getProductsByPriceRangeController.execute(req);
 
-  res.status(statusCode).send(body);
-});
+    res.status(statusCode).send(body);
+  }
+);
 
 productRouter.post(
   "/",
