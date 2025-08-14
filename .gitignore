@@ -2,7 +2,7 @@ node_modules
 
 #env files
 .env
-
+.env.test
 #Postgres Volume
 /src/generated/prisma
 .postgres_data
