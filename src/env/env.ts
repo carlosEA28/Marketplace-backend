@@ -11,6 +11,9 @@ const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string(),
   AWS_REGION: z.string(),
   BUCKET_NAME: z.string(),
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.string().pipe(z.coerce.number()),
+  REDIS_PASSWORD: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

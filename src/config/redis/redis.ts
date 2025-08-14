@@ -1,4 +1,5 @@
 import Redis, { Callback, RedisKey } from "ioredis";
+import { env } from "../../env/env";
 
 interface writeDataProps {
   key: RedisKey;
@@ -8,9 +9,9 @@ interface writeDataProps {
 export class RedisService extends Redis {
   constructor() {
     super({
-      host: "localhost",
-      port: 6379,
-      password: "caduredis",
+      host: env.REDIS_HOST,
+      port: Number(env.REDIS_PORT),
+      password: env.REDIS_PASSWORD,
     });
 
     this.on("connect", () => {});
