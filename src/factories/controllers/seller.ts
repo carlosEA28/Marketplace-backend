@@ -12,6 +12,7 @@ import { LoginSellerController } from "../../controllers/seller/login";
 import { TokenVerifierAdapter } from "../../adapters/tokenVerifire";
 import { RefreshTokenService } from "../../service/seller/refreshToken";
 import { RefreshTokenController } from "../../controllers/product/refreshToken";
+import { CreateSellerServiceInterface } from "../../schemas/implementation/seller/ICreateSeller";
 
 export const makeCreateSellerController = () => {
   const getSellerByEmail = new PostgresGetSellerByEmailRepository();

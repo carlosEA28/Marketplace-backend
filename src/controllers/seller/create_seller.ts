@@ -4,9 +4,10 @@ import { Request } from "express";
 import { badRequest, created, serverError } from "../helpers/httpHelper";
 import { ZodError } from "zod";
 import { EmailAlreadyInUseError } from "../../errors/seller";
+import { CreateSellerServiceInterface } from "../../schemas/implementation/seller/ICreateSeller";
 
 export class CreateSellerController {
-  constructor(private createSellerService: CreateSellerService) {
+  constructor(private createSellerService: CreateSellerServiceInterface) {
     this.createSellerService = createSellerService;
   }
 

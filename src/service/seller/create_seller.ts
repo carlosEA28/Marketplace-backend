@@ -6,7 +6,8 @@ import { v4 as uuidV4 } from "uuid";
 import { EmailAlreadyInUseError } from "../../errors/seller";
 import { S3Service } from "../s3";
 import type { CreateSellerData } from "../../schemas/seller";
-export class CreateSellerService {
+import { CreateSellerServiceInterface } from "../../schemas/implementation/seller/ICreateSeller";
+export class CreateSellerService implements CreateSellerServiceInterface {
   constructor(
     private getSellerByEmailRepository: PostgresGetSellerByEmailRepository,
     private createSellerRepository: PostgresCreateSellerRepository,
