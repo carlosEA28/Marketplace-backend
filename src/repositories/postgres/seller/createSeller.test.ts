@@ -1,11 +1,7 @@
 import { PostgresCreateSellerRepository } from "./create_seller";
 import { prisma } from "../../../../prisma/prisma";
 import { describe, expect, it, beforeEach, jest } from "@jest/globals";
-import {
-  duplicatedCpfSeller,
-  duplicatedEmailSeller,
-  seller,
-} from "../../../tests/fixtures/seller";
+import { duplicatedEmailSeller, seller } from "../../../tests/fixtures/seller";
 
 describe("Create user repository", () => {
   beforeEach(async () => {
@@ -14,6 +10,8 @@ describe("Create user repository", () => {
 
   it("should create a seller on db", async () => {
     const sut = new PostgresCreateSellerRepository();
+
+    console.log("seller enviado:", seller);
 
     const res = await sut.execute(seller);
 
@@ -31,6 +29,8 @@ describe("Create user repository", () => {
 
     const prismaSpy = jest.spyOn(prisma.seller, "create");
 
+    console.log("seller enviado:", seller);
+
     await sut.execute(seller);
 
     expect(prismaSpy).toHaveBeenCalledWith({
@@ -41,7 +41,7 @@ describe("Create user repository", () => {
         email: seller.email,
         password: seller.password,
         cpf: seller.cpf,
-        avatarImage: seller.avatarImg,
+        avatarImg: seller.avatarImg,
       }),
     });
   });
@@ -57,8 +57,20 @@ describe("Create user repository", () => {
   it("should not create a seller if the cpf is duplicated", async () => {
     const sut = new PostgresCreateSellerRepository();
 
-    await sut.execute(seller);
+    const firstSeller = {
+      ...seller,
+      cpf: "12345678901",
+    };
 
-    await expect(sut.execute(duplicatedCpfSeller)).rejects.toThrow();
+    const duplicatedSeller = {
+      ...seller,
+      cpf: "12345678901",
+    };
+
+    // Cria o primeiro seller
+    await sut.execute(firstSeller);
+
+    // Tenta criar o duplicado — deve lançar erro do Prisma
+    await expect(sut.execute(duplicatedSeller)).rejects.toThrow();
   });
 });

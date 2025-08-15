@@ -7,7 +7,7 @@
     "start": " node --watch dist/index.js",
     "dev": "nodemon ./index.ts",
     "build": "tsc --build",
-    "test": "dotenv -e .env.test -- jest --passWithNoTests --silent",
+    "test": "dotenv -e .env.test -- jest --passWithNoTests ",
     "test:watch": "dotenv -e .env.test -- jest --watch --passWithNoTests --silent",
     "test:coverage": "jest --passWithNoTests --silent --coverage"
   },
