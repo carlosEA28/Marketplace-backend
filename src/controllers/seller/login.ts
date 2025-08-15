@@ -10,9 +10,10 @@ import {
 } from "../helpers/httpHelper";
 import { ZodError } from "zod";
 import { InvalidPasswordError, UserNotFoundError } from "../../errors/seller";
+import { ILoginSellerService } from "../../schemas/implementation/seller/ILoginSellerService";
 
 export class LoginSellerController {
-  constructor(private loginSellerService: LoginSellerService) {}
+  constructor(private loginSellerService: ILoginSellerService) {}
 
   async execute(httpRequest: Request) {
     try {
@@ -22,7 +23,7 @@ export class LoginSellerController {
 
       const seller = await this.loginSellerService.execute(params);
 
-      return ok(seller); // ✅ statusCode + body
+      return ok(seller);
     } catch (error) {
       if (error instanceof ZodError) {
         return badRequest({ message: error.message });
@@ -36,7 +37,7 @@ export class LoginSellerController {
         return notFound({ message: "Usuário não encontrado" });
       }
 
-      return serverError("Erro interno no servidor"); // ✅ ADICIONAR retorno default
+      return serverError("Erro interno no servidor");
     }
   }
 }

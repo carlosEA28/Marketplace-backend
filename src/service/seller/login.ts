@@ -1,12 +1,11 @@
-import z from "zod";
 import { PasswordComparatorAdapter } from "../../adapters/passwordComparator";
 import { TokenGeneratorAdapter } from "../../adapters/tokenGenerator";
 import { InvalidPasswordError, UserNotFoundError } from "../../errors/seller";
 import { PostgresGetSellerByEmailRepository } from "../../repositories/postgres/seller/getSellerByEmail";
-import { loginSchema } from "../../schemas/global/loginSchema";
 import type { LoginSchemaData } from "../../schemas/global/loginSchema";
+import { ILoginSellerService } from "../../schemas/implementation/seller/ILoginSellerService";
 
-export class LoginSellerService {
+export class LoginSellerService implements ILoginSellerService {
   constructor(
     private getSellerByEmail: PostgresGetSellerByEmailRepository,
     private passwordComparatorAdapter: PasswordComparatorAdapter,
