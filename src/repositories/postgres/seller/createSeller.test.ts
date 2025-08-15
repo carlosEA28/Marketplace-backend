@@ -1,7 +1,7 @@
 import { PostgresCreateSellerRepository } from "./create_seller";
 import { prisma } from "../../../../prisma/prisma";
 import { describe, expect, it, beforeEach, jest } from "@jest/globals";
-import { seller } from "../../../tests/fixtures/seller";
+import { duplicatedEmailSeller, seller } from "../../../tests/fixtures/seller";
 
 describe("Create user repository", () => {
   beforeEach(async () => {
@@ -40,5 +40,13 @@ describe("Create user repository", () => {
         avatarImage: seller.avatarImg,
       }),
     });
+  });
+
+  it("should not create a seller if the email is duplicated", async () => {
+    const sut = new PostgresCreateSellerRepository();
+
+    await sut.execute(duplicatedEmailSeller);
+
+    await expect(sut.execute(duplicatedEmailSeller)).rejects.toThrow();
   });
 });
