@@ -31,4 +31,11 @@ describe("Get seller by Email repository", () => {
 
     expect(res).toBeNull();
   });
+
+  it("should return null if the email is an empty string", async () => {
+    const sut = new PostgresGetSellerByEmailRepository();
+    const res = await sut.execute("");
+
+    expect(res).toBeNull();
+  });
 });
