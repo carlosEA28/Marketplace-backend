@@ -1,5 +1,5 @@
 import { seller } from "../../../tests/fixtures/seller";
-import { beforeEach, describe, expect, it } from "@jest/globals";
+import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { PostgresCreateSellerRepository } from "./create_seller";
 import { PostgresGetSellerByEmailRepository } from "./getSellerByEmail";
 import { prisma } from "../../../../prisma/prisma";
@@ -23,6 +23,20 @@ describe("Get seller by Email repository", () => {
     const res = await sut.execute((await newSeller).email);
 
     expect(res?.email).toBe((await newSeller).email);
+  });
+
+  it("should call Prisma with the correct params", async () => {
+    const sut = new PostgresGetSellerByEmailRepository();
+
+    const prismaSpy = jest.spyOn(prisma.seller, "findUnique");
+
+    await sut.execute(seller.email);
+
+    expect(prismaSpy).toHaveBeenCalledWith({
+      where: {
+        email: seller.email,
+      },
+    });
   });
 
   it("should return null if the email does not exist", async () => {
