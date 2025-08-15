@@ -1,9 +1,7 @@
 import { PostgresCreateSellerRepository } from "./create_seller";
-import { faker } from "@faker-js/faker";
 import { prisma } from "../../../../prisma/prisma";
 import { describe, expect, it, beforeEach, jest } from "@jest/globals";
 import { seller } from "../../../tests/fixtures/seller";
-import { cpf } from "cpf-cnpj-validator";
 
 describe("Create user repository", () => {
   beforeEach(async () => {
