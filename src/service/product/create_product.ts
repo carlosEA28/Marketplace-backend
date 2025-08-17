@@ -4,6 +4,7 @@ import { PostgresGetSellerById } from "../../repositories/postgres/seller/getSel
 import { CreateProductData } from "../../schemas/product";
 import { v4 as uuidv4 } from "uuid";
 import { S3Service } from "../s3";
+import { ICreateProductService } from "../../schemas/implementation/product/ICreateProductService";
 
 export class CreateProductService {
   constructor(
